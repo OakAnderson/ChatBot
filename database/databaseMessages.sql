@@ -1,0 +1,9 @@
+CREATE TABLE messages (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    message VARCHAR(100) NOT NULL,
+    answer1 VARCHAR(100) NOT NULL,
+    answer2 VARCHAR(100) DEFAULT 'None',
+    answer3 VARCHAR(100) DEFAULT 'None',
+    answer4 VARCHAR(100) DEFAULT 'None',
+    answer5 VARCHAR(100) DEFAULT 'None'
+);
