@@ -7,13 +7,15 @@ import (
 	"log"
 	"net/http"
 
+	tm "github.com/OakAnderson/ChatBot/API/models/telegram"
 	"github.com/OakAnderson/ChatBot/process"
-	tm "github.com/OakAnderson/ChatBot/telegram"
 )
 
+// PORT se refere a porta que o servidor vai rodar
 const PORT = ":3000"
 
-func Handler(res http.ResponseWriter, req *http.Request) {
+// ServeTelegram é uma função que atende o padrão http.HandleFunc
+func ServeTelegram(res http.ResponseWriter, req *http.Request) {
 	body := &tm.WebhookReqBody{}
 
 	if err := json.NewDecoder(req.Body).Decode(body); err != nil {

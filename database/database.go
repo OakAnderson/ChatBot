@@ -5,10 +5,12 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/OakAnderson/ChatBot/utils"
-	_ "github.com/mattn/go-sqlite3"
+	"github.com/OakAnderson/ChatBot/util/rand"
+	_ "github.com/mattn/go-sqlite3" // Driver para sqlite3
 )
 
+// Message guarda valores como o id no banco de dados, a mensagem e
+// uma resposta
 type Message struct {
 	id      int64
 	Message string
@@ -25,6 +27,8 @@ func connectDatabase(dbName string) (db *sql.DB, err error) {
 	return
 }
 
+// QueryMessage recupera uma coluna no banco de dados correspondente a
+// expressão recebida
 func QueryMessage(db *sql.DB, query string) (mss Message, answers []string, err error) {
 	row := db.QueryRow(query)
 	answers = make([]string, 5)
@@ -35,6 +39,8 @@ func QueryMessage(db *sql.DB, query string) (mss Message, answers []string, err 
 	return
 }
 
+// RecoverAnswer retorna uma mensagem encontrada no banco de dados
+// para a mensagem recebida
 func RecoverAnswer(message string) (mss Message, err error) {
 	db, err := connectDatabase("database/messages.db")
 	if err != nil {
@@ -46,10 +52,12 @@ func RecoverAnswer(message string) (mss Message, err error) {
 
 	mss, answers, err := QueryMessage(db, query)
 
-	mss.Answer = utils.RandAnswer(answers)
+	mss.Answer = rand.SelectString(answers, func(v string) bool {
+		return v == "None"
+	})
 
 	if mss.Answer == "" {
-		return mss, errors.New("Nenhuma resposta possível.")
+		return mss, errors.New("nenhuma resposta possível")
 	}
 
 	return mss, nil

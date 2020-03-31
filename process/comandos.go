@@ -11,6 +11,7 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
+// ComandoDado gera um ou mais numeros aleatorios de acordo com os parametros
 func ComandoDado(message string) string {
 	args := strings.Split(message, " ")
 	max, num := 6, 1
