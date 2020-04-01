@@ -11,8 +11,11 @@ import (
 	"github.com/OakAnderson/ChatBot/process"
 )
 
-// PORT se refere a porta que o servidor vai rodar
-const PORT = ":3000"
+const (
+	// PORT se refere a porta que o servidor vai rodar
+	PORT               = ":3000"
+	erroMensagemGrande = "Mensagem solicitada muito grande. Tente novamente."
+)
 
 // ServeTelegram é uma função que atende o padrão http.HandleFunc
 func ServeTelegram(res http.ResponseWriter, req *http.Request) {
@@ -37,6 +40,9 @@ func sendAnswer(ChatID int64, Text string) error {
 	reqBody := &tm.SendMensageReqBody{
 		ChatID: ChatID,
 		Text:   Text,
+	}
+	if len(Text) > 2048 {
+		reqBody.Text = erroMensagemGrande
 	}
 
 	reqBytes, err := json.Marshal(reqBody)
