@@ -1,11 +1,9 @@
 package telegram
 
-const (
-	// TelegramLink é o link para a api do telegram
-	TelegramLink = "https://api.telegram.org"
-	// BotToken é o token de acesso da API
-	BotToken = "1037487028:AAHUG8-W3ufixfrmAejOYjls0P_V8sWoBC4"
-)
+import "io/ioutil"
+
+// TelegramLink é o link para a api do telegram
+const TelegramLink = "https://api.telegram.org"
 
 // WebhookReqBody é uma estrura que guarda valores de uma mensagem recebida
 type WebhookReqBody struct {
@@ -35,4 +33,15 @@ type WebhookReqBody struct {
 type SendMensageReqBody struct {
 	ChatID int64  `json:"chat_id"`
 	Text   string `json:"text"`
+}
+
+// Token retorna o token do bot
+func Token() (token string, err error) {
+	tokenFile, err := ioutil.ReadFile("API/models/telegram/token.txt")
+
+	if err != nil {
+		return "", err
+	}
+
+	return string(tokenFile), nil
 }
