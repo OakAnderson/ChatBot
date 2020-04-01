@@ -49,8 +49,11 @@ func sendAnswer(ChatID int64, Text string) error {
 	if err != nil {
 		return err
 	}
-
-	url := tm.TelegramLink + "/bot" + tm.BotToken + "/sendMessage"
+	token, err := tm.Token()
+	if err != nil {
+		return err
+	}
+	url := tm.TelegramLink + "/bot" + token + "/sendMessage"
 
 	res, err := http.Post(url, "application/json", bytes.NewBuffer(reqBytes))
 	if err != nil {
