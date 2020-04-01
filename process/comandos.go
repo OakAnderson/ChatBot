@@ -20,13 +20,13 @@ func ComandoDado(message string) string {
 	if len(args) >= 3 {
 		num, err = strconv.Atoi(args[2])
 		if err != nil {
-			return "Argumentos inválidos"
+			return "uso: /dado valorMaximo numeroDeDados"
 		}
 	}
 	if len(args) >= 2 {
 		max, err = strconv.Atoi(args[1])
 		if err != nil {
-			return "Argumentos inválidos"
+			return "uso: /dado valorMaximo numeroDeDados"
 		}
 	}
 
